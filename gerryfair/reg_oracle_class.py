@@ -20,6 +20,7 @@ class RegOracle:
             x_i = pd.DataFrame({key: [value] for key, value in zip(x_i.index, x_i.values)})
             c_0 = reg0.predict(x_i)
             c_1 = reg1.predict(x_i)
+            # print(c_0, c_1)
             y_i = int(c_1 < c_0)
             y.append(y_i)
         return y

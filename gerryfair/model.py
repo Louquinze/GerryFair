@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn import linear_model
 from sklearn import ensemble
+from sklearn import svm
 import gerryfair.fairness_plots
 import gerryfair.heatmap
 from gerryfair.learner import Learner
@@ -21,7 +22,7 @@ class Model:
                         X,
                         X_prime,
                         y,
-                        early_termination=True):
+                        early_termination=False):
         """
         Fictitious Play Algorithm
         Input: dataset cleaned into X, X_prime, y
@@ -30,7 +31,7 @@ class Model:
 
         # defining variables and data structures for algorithm
         learner = Learner(X, y, self.predictor)
-        auditor = Auditor(X_prime, y, self.fairness_def)
+        auditor = Auditor(X_prime, y, self.fairness_def, self.predictor)
         history = ClassifierHistory()
 
         # initialize variables
@@ -54,10 +55,9 @@ class Model:
             (error, predictions) = learner.generate_predictions(history.get_most_recent(), predictions, iteration)
             
             # auditor's best response: find group, update costs
-            metric_baseline = auditor.get_baseline(y, predictions) 
+            metric_baseline = auditor.get_baseline(y, predictions)
             group = auditor.get_group(predictions, metric_baseline)
             costs_0, costs_1 = auditor.update_costs(costs_0, costs_1, group, self.C, iteration, self.gamma)
-
             # outputs
             errors.append(error)
             fairness_violations.append(group.weighted_disparity)
@@ -70,6 +70,7 @@ class Model:
                 iteration = self.max_iters
 
         self.classifiers = history.classifiers
+        # Todo track this, goal compare 3 regressor on 3 datasets
         return errors, fairness_violations
 
     def print_outputs(self, iteration, error, group):
@@ -194,7 +195,8 @@ class Model:
                         gamma=0.01,
                         fairness_def='FP',
                         # predictor=linear_model.LinearRegression()):
-                        predictor=ensemble.RandomForestRegressor()):
+                        # predictor=ensemble.RandomForestRegressor()):
+                        predictor=svm.SVR()):
         self.C = C
         self.printflag = printflag
         self.heatmapflag = heatmapflag

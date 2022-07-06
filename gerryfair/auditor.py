@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
-from sklearn import linear_model
-from sklearn import ensemble
+import copy
 from gerryfair.reg_oracle_class import RegOracle
 
 class Group(object):
@@ -22,7 +21,8 @@ class Group(object):
 class Auditor:
     """This is the Auditor class. It is used in the training algorithm to repeatedly find subgroups that break the
     fairness disparity constraint. You can also use it independently as a stand alone auditor."""
-    def __init__(self, X_prime, y, fairness_def):
+    def __init__(self, X_prime, y, fairness_def, predictor):
+        self.predictor = predictor
         self.X_prime = X_prime
         self.y_input = y
         self.y_inverse = np.array([abs(1-y_value) for y_value in self.y_input])
@@ -100,12 +100,10 @@ class Auditor:
 
         cost_0 = [0.0] * m
         cost_1 = -1.0 / n * (metric_baseline - predictions_subset)
-        
-        # reg0 = linear_model.LinearRegression()
-        reg0 = ensemble.RandomForestRegressor()
+
+        reg0 = copy.deepcopy(self.predictor)
         reg0.fit(X_subset, cost_0)
-        # reg1 = linear_model.LinearRegression()
-        reg1 = ensemble.RandomForestRegressor()
+        reg1 = copy.deepcopy(self.predictor)
         reg1.fit(X_subset, cost_1)
         func = RegOracle(reg0, reg1)
         group_members_0 = func.predict(X_subset)
@@ -122,9 +120,9 @@ class Auditor:
         cost_0_neg = [0.0] * m
         cost_1_neg = -1.0 / n * (predictions_subset - metric_baseline)
 
-        reg0_neg = linear_model.LinearRegression()
+        reg0_neg = copy.deepcopy(self.predictor)
         reg0_neg.fit(X_subset, cost_0_neg)
-        reg1_neg = linear_model.LinearRegression()
+        reg1_neg = copy.deepcopy(self.predictor)
         reg1_neg.fit(X_subset, cost_1_neg)
         func_neg = RegOracle(reg0_neg, reg1_neg)
         group_members_0_neg = func_neg.predict(X_subset)

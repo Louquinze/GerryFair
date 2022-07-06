@@ -26,7 +26,6 @@ class Learner:
     # error: the error of the average classifier found thus far (incorporating q)
     def generate_predictions(self, q, A, iteration):
         """Return the classifications of the average classifier at time iter."""
-
         new_preds = np.multiply(1.0 / iteration, q.predict(self.X))
         ds = np.multiply((iteration - 1.0) / iteration, A)
         ds = np.add(ds, new_preds)

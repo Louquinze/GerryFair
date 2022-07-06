@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+
 
 class RegOracle:
     """Class RegOracle, linear threshold classifier."""
@@ -14,7 +16,8 @@ class RegOracle:
         y = []
         for i in range(n):
             x_i = X.iloc[i, :]
-            x_i = x_i.values.reshape(1, -1)
+            # allows to use random_forest
+            x_i = pd.DataFrame({key: [value] for key, value in zip(x_i.index, x_i.values)})
             c_0 = reg0.predict(x_i)
             c_1 = reg1.predict(x_i)
             y_i = int(c_1 < c_0)

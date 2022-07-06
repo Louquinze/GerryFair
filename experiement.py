@@ -23,7 +23,7 @@ fair_model = gerryfair.model.Model(C=C,
                                    printflag=printflag,
                                    gamma=gamma,
                                    fairness_def='FP',
-                                   predictor=RandomForestRegressor(max_depth=2))
+                                   predictor=RandomForestRegressor(max_depth=3))
 # predictor=RandomForestRegressor(max_depth=1)
 gamma_list = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2]
 centered = True

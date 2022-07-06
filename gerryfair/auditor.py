@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn import linear_model
+from sklearn import ensemble
 from gerryfair.reg_oracle_class import RegOracle
 
 class Group(object):
@@ -100,9 +101,11 @@ class Auditor:
         cost_0 = [0.0] * m
         cost_1 = -1.0 / n * (metric_baseline - predictions_subset)
         
-        reg0 = linear_model.LinearRegression()
+        # reg0 = linear_model.LinearRegression()
+        reg0 = ensemble.RandomForestRegressor()
         reg0.fit(X_subset, cost_0)
-        reg1 = linear_model.LinearRegression()
+        # reg1 = linear_model.LinearRegression()
+        reg1 = ensemble.RandomForestRegressor()
         reg1.fit(X_subset, cost_1)
         func = RegOracle(reg0, reg1)
         group_members_0 = func.predict(X_subset)

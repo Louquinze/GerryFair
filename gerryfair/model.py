@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn import linear_model
+from sklearn import ensemble
 import gerryfair.fairness_plots
 import gerryfair.heatmap
 from gerryfair.learner import Learner
@@ -192,7 +193,8 @@ class Model:
                         max_iters=10,
                         gamma=0.01,
                         fairness_def='FP',
-                        predictor=linear_model.LinearRegression()):
+                        # predictor=linear_model.LinearRegression()):
+                        predictor=ensemble.RandomForestRegressor()):
         self.C = C
         self.printflag = printflag
         self.heatmapflag = heatmapflag

@@ -22,7 +22,7 @@ class Model:
                         X,
                         X_prime,
                         y,
-                        early_termination=False):
+                        early_termination=True):
         """
         Fictitious Play Algorithm
         Input: dataset cleaned into X, X_prime, y

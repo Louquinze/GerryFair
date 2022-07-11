@@ -1,5 +1,6 @@
 import pickle
 import gerryfair
+from gerryfair.util import creat_pareto
 import warnings
 from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import LinearRegression
@@ -30,6 +31,7 @@ if __name__ == '__main__':
     C = 10
     printflag = True
     gamma = args.gamma
+    tag = f"{args.regressor}_{args.dataset}_{args.gamma}_{args.max_iters}"
     if args.regressor == "linear":
         predictor = LinearRegression()
     elif args.regressor == "random-forest":
@@ -42,7 +44,8 @@ if __name__ == '__main__':
                                        printflag=printflag,
                                        gamma=gamma,
                                        fairness_def='FP',
-                                       predictor=predictor)
+                                       predictor=predictor,
+                                       tag=tag)
 
     centered = True
 
@@ -62,6 +65,10 @@ if __name__ == '__main__':
     y_train = y.iloc[:train_size]
     fair_model.set_options(max_iters=max_iters)
 
-    something = fair_model.train(X_train, X_prime_train, y_train)
+    # something = fair_model.train(X_train, X_prime_train, y_train)
 
-    print(something)
+    # Todo plots
+    #   1. Pareto
+    #   2. Tracery
+
+    creat_pareto(tag=tag)

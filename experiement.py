@@ -35,7 +35,7 @@ if __name__ == '__main__':
     if args.regressor == "linear":
         predictor = LinearRegression()
     elif args.regressor == "random-forest":
-        predictor = RandomForestRegressor(max_depth=3)
+        predictor = RandomForestRegressor(min_samples_leaf=2, min_samples_split=3)
     elif args.regressor == "gradient-boost":
         predictor = GradientBoostingRegressor()
     elif args.regressor == "mlp":
@@ -69,3 +69,5 @@ if __name__ == '__main__':
 
     creat_pareto(tag=tag)
     creat_tracery(tag=tag)
+
+    # Todo Test set --> move the plot clac to the test set for true pareto front

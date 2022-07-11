@@ -34,7 +34,7 @@ def creat_pareto(tag="default"):
 
     pareto = keep_efficient(mrx)
 
-    h = plt.plot(mrx[:, 0], mrx[:, 1], '.b', markersize=12, label='Non Pareto-optimal')
+    h = plt.plot(mrx[:, 0], mrx[:, 1], '.b', markersize=6, label='Non Pareto-optimal')
     h = plt.plot(pareto[:, 0], pareto[:, 1], '.r', markersize=12, label='Non Pareto-optimal')
     _ = plt.title(f'experiment: {tag}', fontsize=14)
     plt.xlabel('error', fontsize=12)

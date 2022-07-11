@@ -1,6 +1,6 @@
 import pickle
 import gerryfair
-from gerryfair.util import creat_pareto
+from gerryfair.util import creat_pareto, creat_tracery
 import warnings
 from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import LinearRegression
@@ -65,10 +65,7 @@ if __name__ == '__main__':
     y_train = y.iloc[:train_size]
     fair_model.set_options(max_iters=max_iters)
 
-    # something = fair_model.train(X_train, X_prime_train, y_train)
-
-    # Todo plots
-    #   1. Pareto
-    #   2. Tracery
+    fair_model.train(X_train, X_prime_train, y_train)
 
     creat_pareto(tag=tag)
+    creat_tracery(tag=tag)

@@ -40,3 +40,16 @@ def creat_pareto(tag="default"):
     plt.xlabel('error', fontsize=12)
     plt.ylabel('fairness_violation', fontsize=12)
     plt.show()
+
+
+def creat_tracery(tag="default"):
+    df = pd.read_csv(f"res/{tag}.csv")
+    mrx = df[["error", "fairness_violation"]].to_numpy()
+
+    h = plt.plot(mrx[:, 0], mrx[:, 1], label='Tracery')
+    plt.hlines(y=[0.01], xmin=[0], xmax=[max(mrx[:, 0])], colors='purple', linestyles='--', lw=2,
+               label='Multiple Lines')
+    _ = plt.title(f'experiment: {tag}', fontsize=14)
+    plt.xlabel('error', fontsize=12)
+    plt.ylabel('fairness_violation', fontsize=12)
+    plt.show()

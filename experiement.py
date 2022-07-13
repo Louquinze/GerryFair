@@ -8,6 +8,7 @@ from sklearn.svm import SVR, LinearSVR
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 import matplotlib.pyplot as plt
 import argparse
+from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -27,6 +28,7 @@ parser.add_argument('--gamma', type=float, default=.01)
 parser.add_argument('--max_iters', type=int, default=200)
 
 if __name__ == '__main__':
+    Path("fig").mkdir(parents=True, exist_ok=True)
     args = parser.parse_args()
     C = 10
     printflag = True
@@ -69,5 +71,3 @@ if __name__ == '__main__':
 
     creat_pareto(tag=tag)
     creat_tracery(tag=tag)
-
-    # Todo Test set --> move the plot clac to the test set for true pareto front

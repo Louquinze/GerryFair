@@ -29,6 +29,7 @@ parser.add_argument('--max_iters', type=int, default=200)
 
 if __name__ == '__main__':
     Path("fig").mkdir(parents=True, exist_ok=True)
+    Path("res").mkdir(parents=True, exist_ok=True)
     args = parser.parse_args()
     C = 10
     printflag = True

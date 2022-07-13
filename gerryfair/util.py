@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 """
 https://stackoverflow.com/questions/32791911/fast-calculation-of-pareto-front-in-python
@@ -63,14 +64,17 @@ def creat_big_pareto(tag="default", include=[]):
     mrx = df[["error", "fairness_violation"]].to_numpy()
     indicators = df[["regressor"]].to_numpy()
 
-    pareto = keep_efficient(mrx, indicators=indicators)
-    print(pareto)
-    h = plt.plot(mrx[:, 0], mrx[:, 1], '.b', markersize=6, label='Non Pareto-optimal')
-    h = plt.plot(pareto[:, 0], pareto[:, 1], '.r', markersize=12, label='Non Pareto-optimal')
-    _ = plt.title(f'experiment: {tag}', fontsize=14)
-    plt.xlabel('error', fontsize=12)
-    plt.ylabel('fairness_violation', fontsize=12)
-    plt.savefig(f"fig/pareto_{tag}.pdf")
+    pareto, indicators = keep_efficient(mrx, indicators=indicators)
+    mrx_pareto = np.hstack((pareto, indicators))
+
+    df_pareto = pd.DataFrame(mrx_pareto, columns=["error", "fairness_violation", "regressor"])
+    sns.scatterplot(data=df, x="error", y="fairness_violation", hue="regressor", s=20)
+    sns.scatterplot(data=df_pareto, x="error", y="fairness_violation", hue="regressor", s=70)
+    plt.savefig(f"fig/all_scatter_{tag}.pdf")
+
+    plt.cla()
+    sns.scatterplot(data=df_pareto, x="error", y="fairness_violation", hue="regressor", s=50)
+    plt.savefig(f"fig/all_pareto_{tag}.pdf")
 
 
 def creat_tracery(tag="default"):

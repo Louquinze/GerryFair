@@ -18,7 +18,7 @@ lawschool_dataset = "./dataset/lawschool.csv"  # 1
 lawschool_attributes = "./dataset/lawschool_protected.csv"
 adult_dataset = "./dataset/adult.csv"  # 3
 adult_attributes = "./dataset/adult_protected.csv"
-student_dataset = "./dataset/student-mat.csv"  # 5
+student_dataset = "./dataset/student-mat.csv"  # 4
 student_attributes = "./dataset/student_protected.csv"
 
 parser = argparse.ArgumentParser(description='Process some integers.')
@@ -38,11 +38,11 @@ if __name__ == '__main__':
     if args.regressor == "linear":
         predictor = LinearRegression()
     elif args.regressor == "random-forest":
-        predictor = RandomForestRegressor(min_samples_leaf=2, min_samples_split=3)
+        predictor = RandomForestRegressor(min_samples_leaf=10)
     elif args.regressor == "gradient-boost":
         predictor = GradientBoostingRegressor()
     elif args.regressor == "mlp":
-        predictor = MLPRegressor()
+        predictor = MLPRegressor(max_iter=1000)
     fair_model = gerryfair.model.Model(C=C,
                                        printflag=printflag,
                                        gamma=gamma,
@@ -70,5 +70,5 @@ if __name__ == '__main__':
 
     fair_model.train(X_train, X_prime_train, y_train)
 
-    creat_pareto(tag=tag)
-    creat_tracery(tag=tag)
+    # creat_pareto(tag=tag)
+    # creat_tracery(tag=tag)

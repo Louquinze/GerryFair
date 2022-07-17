@@ -1,0 +1,8 @@
+python experiement.py --dataset 0 --regressor linear --max_iters 1000
+python experiement.py --dataset 0 --regressor random-forest --max_iters 1000
+python experiement.py --dataset 0 --regressor gradient-boost --max_iters 1000
+python experiement.py --dataset 0 --regressor mlp --max_iters 1000
+python experiement.py --dataset 1 --regressor linear --max_iters 1000
+python experiement.py --dataset 1 --regressor random-forest --max_iters 1000
+python experiement.py --dataset 1 --regressor gradient-boost --max_iters 1000
+python experiement.py --dataset 1 --regressor mlp --max_iters 1000

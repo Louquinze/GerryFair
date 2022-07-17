@@ -57,6 +57,10 @@ if __name__ == '__main__':
         X, X_prime, y = gerryfair.clean.clean_dataset(communities_dataset, communities_attributes, centered)
     elif args.dataset == 1:
         X, X_prime, y = gerryfair.clean.clean_dataset(lawschool_dataset, lawschool_attributes, centered)
+    elif args.dataset == 2:
+        X, X_prime, y = gerryfair.clean.clean_dataset(adult_dataset, adult_attributes, centered)
+    elif args.dataset == 3:
+        X, X_prime, y = gerryfair.clean.clean_dataset(student_dataset, student_attributes, centered)
 
     warnings.filterwarnings("error")
 
